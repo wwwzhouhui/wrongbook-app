@@ -33,13 +33,5 @@
       "src": "/(.*)",
       "dest": "/frontend/index.html"
     }
-  ],
-  "env": {
-    "DATABASE_URL": "sqlite:////tmp/wrongbook.db"
-  },
-  "build": {
-    "env": {
-      "DATABASE_URL": "sqlite:////tmp/wrongbook.db"
-    }
-  }
+  ]
 }

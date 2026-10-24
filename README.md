@@ -113,8 +113,9 @@ qa/                         无头浏览器实测截图（首页/错题库/今�
 在 Vercel 用 GitHub 授权导入本仓库即可部署，前端（React 构建产物）与后端
 （FastAPI serverless 函数）同域，`/api/*` 路由到函数，其余路径走前端 SPA。
 
-注意：Vercel 没有 MySQL，默认 `DATABASE_URL=sqlite:////tmp/wrongbook.db`
-（serverless 临时文件，冷启动或多实例时数据会重置，仅适合演示）。
-要持久化，在 Vercel 项目 Settings → Environment Variables 把 `DATABASE_URL`
-改成外部数据库连接串即可（外部 MySQL，或 Postgres——需在根 requirements.txt
-另加 `psycopg2-binary`），业务代码不用改。正式使用仍推荐上面的 Docker 方案。
+注意：Vercel 没有 MySQL。线上版已通过 Vercel Marketplace 集成接了免费的
+Neon Postgres（新加坡节点）做持久化：集成自动注入 `DATABASE_URL`，根
+requirements.txt 已含 `psycopg2-binary` 驱动，`database.py` 会把 `postgres://`
+短协议名归一化为 `postgresql://`，业务代码不用改。若 `DATABASE_URL` 未设置，
+入口会退回 `/tmp` 的 SQLite 临时库（冷启动即重置，仅兜底演示）。
+正式自托管仍推荐上面的 Docker + MySQL 方案。
