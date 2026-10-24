@@ -20,7 +20,7 @@ export default function Library({ ctx }) {
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value })
   const printList = () => {
     const w = window.open('', '_blank')
-    w.document.write(`<title>拾光错题打印</title><style>body{font:14px/1.9 sans-serif;max-width:850px;margin:30px auto;padding:0 20px}.q{border-bottom:1px solid #ddd;padding:14px 0}</style>` +
+    w.document.write(`<title>错题打印</title><style>body{font:14px/1.9 sans-serif;max-width:850px;margin:30px auto;padding:0 20px}.q{border-bottom:1px solid #ddd;padding:14px 0}</style>` +
       list.map((q, i) => `<div class="q"><h3>${i + 1}. [${q.subject}] ${q.title}</h3><p><strong>答案：</strong>${q.answer}</p><p>错因：${q.reason || ''} · 知识点：${q.tag || ''}</p></div>`).join('') +
       '<button onclick="window.print()">打印 / 保存 PDF</button>')
     w.document.close()

@@ -67,7 +67,7 @@ export default function App() {
     <div className="shell">
       <aside className="sidebar" id="sidebar">
         <div className="brand"><div className="brandmark"><Icon n="book" /></div>
-          <div><div className="brandname">拾光自习室</div><small>SHIGUANG STUDY</small></div></div>
+          <div><div className="brandname">错题本</div><small>WRONGBOOK</small></div></div>
         <div className="navgroup">我的学习 · LEARN</div>
         <nav>{NAV.filter((n) => LEARN.includes(n[0])).map(([id, ico, title]) => (
           <button key={id} className={`nav ${view === id ? 'active' : ''}`} onClick={() => go(id)}>
@@ -83,7 +83,7 @@ export default function App() {
       </aside>
       <div className="workspace">
         <header className="topbar">
-          <div className="breadcrumb"><span>我的自习室</span><span>/</span><strong>{crumb || '随机练习'}</strong></div>
+          <div className="breadcrumb"><span>我的错题本</span><span>/</span><strong>{crumb || '随机练习'}</strong></div>
           <div className="toptools">
             <span className="topdate">{new Date().toLocaleDateString('zh-CN', { month: 'long', day: 'numeric', weekday: 'long' })}</span>
             <button className="btn icononly" title="专注计时" onClick={() => go('focus')}><Icon n="timer" /></button>

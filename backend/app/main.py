@@ -25,7 +25,7 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="拾光错题本 API", version="2.0.0", lifespan=lifespan)
+app = FastAPI(title="错题本 API", version="2.0.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -46,7 +46,7 @@ async def api_key_guard(request: Request, call_next):
 
 @app.get("/api/health", tags=["meta"])
 def health():
-    return {"app": "shiguang-wrongbook-app", "version": "2.0.0",
+    return {"app": "wrongbook-app", "version": "2.0.0",
             "database": engine.dialect.name}  # mysql / sqlite（本地调试）
 
 

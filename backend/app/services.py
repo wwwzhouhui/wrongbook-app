@@ -142,7 +142,7 @@ def export_state(db: Session) -> dict:
         "prefs": {"name": prefs.get("name", "同学"), "goal": prefs.get("goal", 5),
                   "minutes": prefs.get("minutes", 25), "theme": prefs.get("theme", "light")},
         "timer": None, "aiSets": ai_sets, "createdAt": now_iso(),
-        "_exportedBy": "shiguang-wrongbook-app (FastAPI) v2",
+        "_exportedBy": "wrongbook-app (FastAPI) v2",
         "_aiPrefs": {k: v for k, v in prefs.items() if k.startswith("ai_")},
     }
 
@@ -158,7 +158,7 @@ def _json_loads(v: str):
 def import_state(db: Session, state: dict) -> int:
     """导入 schema=1 备份：全量替换，FastAPI 依赖事务内失败自动回滚（此处异常即 rollback）。"""
     if not isinstance(state, dict) or state.get("schema") != 1 or not isinstance(state.get("questions"), list):
-        raise ValueError("不是拾光自习室的有效备份（版本 1）")
+        raise ValueError("不是错题本的有效备份（版本 1）")
     try:
         for model in (models.AiQuestion, models.AiSet, models.Attachment, models.Question,
                       models.Log, models.Reward, models.Redemption):

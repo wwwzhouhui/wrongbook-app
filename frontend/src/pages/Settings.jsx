@@ -50,8 +50,8 @@ export default function Settings({ ctx }) {
         <section className="card"><div className="sectiontitle"><h2>数据管理</h2><span className="badge">MySQL</span></div>
           <p className="helper">当前错题 {stats?.total ?? '…'} 道，数据存于 MySQL（Docker 卷 mysql_data）。导出的 JSON 与原版 schema=1 完全兼容，可在原版、旧版与本版之间互相迁移；CSV 不含图片。</p>
           <div className="btnrow" style={{ marginTop: 12, flexDirection: 'column', alignItems: 'stretch' }}>
-            <button className="btn" onClick={() => download('/export/json', `拾光错题本-完整备份-${today()}.json`)}><Icon n="download" />导出完整 JSON 备份</button>
-            <button className="btn" onClick={() => download('/export/csv', `拾光错题-${today()}.csv`)}><Icon n="download" />导出 CSV（表格查看）</button>
+            <button className="btn" onClick={() => download('/export/json', `错题本-完整备份-${today()}.json`)}><Icon n="download" />导出完整 JSON 备份</button>
+            <button className="btn" onClick={() => download('/export/csv', `错题-${today()}.csv`)}><Icon n="download" />导出 CSV（表格查看）</button>
             <button className="btn" onClick={() => importRef.current?.click()}><Icon n="upload" />导入原版 / 本版 JSON 备份（全量替换）</button>
             <button className="btn danger" onClick={async () => {
               if (confirm('清除 18 道示例题？自己录入的题目不受影响。')) { await api.post('/admin/clear-demo'); ctx.toast('示例题已清除'); ctx.refresh() }

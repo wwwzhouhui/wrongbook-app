@@ -1,4 +1,4 @@
-# 拾光错题本 · 工程化版一键部署
+# 错题本 · 工程化版一键部署
 # 用法：cp .env.example .env（按需改密码/密钥）→ docker compose up -d --build
 # 入口：http://localhost:8080（前端）  API 文档：http://localhost:8000/docs
 services:

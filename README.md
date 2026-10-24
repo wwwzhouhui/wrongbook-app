@@ -1,4 +1,4 @@
-# 拾光错题本 · 工程化版（FastAPI + React + MySQL + Docker）
+# 错题本 · 工程化版（FastAPI + React + MySQL + Docker）
 
 按指定技术栈重构的版本：后端 **FastAPI**、前端 **React（Vite + npm 工程化）**、数据库 **MySQL 8**、
 **Docker Compose** 三容器一键部署。界面、九科、间隔复习与积分规则与原版/旧版完全一致；
