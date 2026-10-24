@@ -1,0 +1,53 @@
+# 拾光错题本 · 工程化版一键部署
+# 用法：cp .env.example .env（按需改密码/密钥）→ docker compose up -d --build
+# 入口：http://localhost:8080（前端）  API 文档：http://localhost:8000/docs
+services:
+  db:
+    image: mysql:8.0
+    container_name: wrongbook-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-wrongbook}
+      MYSQL_USER: ${MYSQL_USER:-wrongbook}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-wrongbook}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+      TZ: Asia/Shanghai
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpass}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    # 数据库端口默认不对宿主机暴露（后端在 compose 网络内直连）；需要用客户端连库时再放开：
+    # ports:
+    #   - "3306:3306"
+
+  backend:
+    build: ./backend
+    container_name: wrongbook-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: mysql+pymysql://${MYSQL_USER:-wrongbook}:${MYSQL_PASSWORD:-wrongbook}@db:3306/${MYSQL_DATABASE:-wrongbook}?charset=utf8mb4
+      CORS_ORIGINS: http://localhost:8080,http://127.0.0.1:8080,http://localhost:5173
+      API_KEY: ${API_KEY:-}
+      DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    container_name: wrongbook-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+
+volumes:
+  mysql_data:
