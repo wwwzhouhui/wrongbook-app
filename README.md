@@ -106,3 +106,15 @@ qa/                         无头浏览器实测截图（首页/错题库/今�
 - **未实测项（如实说明）**：本开发 VM 没有 Docker 与 MySQL，`docker compose up` 与 MySQL 方言路径未在此机实际运行；
   Compose 文件已通过 YAML 解析校验，MySQL 差异点（LONGTEXT、RAND()、utf8mb4 连接串、健康检查探针）
   均已针对性处理，首次在有 Docker 的机器上启动时请留意 `docker compose logs backend` 的建表日志。
+
+## Vercel 部署（演示）
+
+仓库已带 Vercel 配置（根目录 `vercel.json` + `api/index.py` 入口 + 根 `requirements.txt`）：
+在 Vercel 用 GitHub 授权导入本仓库即可部署，前端（React 构建产物）与后端
+（FastAPI serverless 函数）同域，`/api/*` 路由到函数，其余路径走前端 SPA。
+
+注意：Vercel 没有 MySQL，默认 `DATABASE_URL=sqlite:////tmp/wrongbook.db`
+（serverless 临时文件，冷启动或多实例时数据会重置，仅适合演示）。
+要持久化，在 Vercel 项目 Settings → Environment Variables 把 `DATABASE_URL`
+改成外部数据库连接串即可（外部 MySQL，或 Postgres——需在根 requirements.txt
+另加 `psycopg2-binary`），业务代码不用改。正式使用仍推荐上面的 Docker 方案。
